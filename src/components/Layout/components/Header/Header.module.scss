@@ -18,6 +18,11 @@
     justify-content: space-between;
 }
 
+.search,
+.search-results {
+    width: 361px;
+}
+
 .search {
     position: relative;
     width: 361px;
@@ -55,6 +60,12 @@
     &:focus-within {
         border: 1.5px solid rgba(22, 24, 35, 0.2);
     }
+}
+
+.search-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 5px 12px;
 }
 
 .clear,
