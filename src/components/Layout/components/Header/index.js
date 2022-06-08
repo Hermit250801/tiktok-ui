@@ -26,6 +26,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountsItem from '~/components/AccountsItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
@@ -101,7 +102,7 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src={images.logo} alt="tiktok" />
+                <Image src={images.logo} alt="tiktok" />
                 <HeadlessTippy
                     interactive
                     visible={searchResult.length > 0}
@@ -157,7 +158,7 @@ function Header() {
 
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 className={cx('user-avatar')}
                                 src="https://i.pinimg.com/originals/3a/2c/5d/3a2c5dfd32ee2aa2e7e1749374058a20.jpg"
                                 alt="Hermit"
