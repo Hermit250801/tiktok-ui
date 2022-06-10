@@ -7,6 +7,7 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountsItem from '~/components/AccountsItem';
 import { SearchIcon } from '~/components/Icons/Icon';
+import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -16,16 +17,18 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    const debounce = useDebounce(searchValue, 500);
+
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debounce.trim()) {
             setSearchResults([]);
             return;
         }
 
         setLoading(true);
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounce)}&type=less`)
             .then((res) => res.json())
             .then((res) => {
                 setSearchResults(res.data);
@@ -34,16 +37,22 @@ function Search() {
             .catch((err) => {
                 setLoading(false);
             });
-    }, [searchValue]);
+    }, [debounce]);
 
     const handleHideResult = () => {
         setShowResult(false);
     };
 
+    const handleClear = () => {
+        setSearchValue('');
+        setSearchResults([]);
+        inputRef.current.focus();
+    };
+
     return (
         <HeadlessTippy
             interactive
-            visible={showResult && searchValue.length > 0}
+            visible={showResult && searchValue.length > 0 && searchResults.length > 0}
             render={(attrs) => (
                 <div className={cx('search-results')} tabIndex="-1" {...attrs}>
                     <PopperWrapper>
@@ -69,13 +78,7 @@ function Search() {
                 />
 
                 {searchValue && !loading && (
-                    <button
-                        className={cx('clear')}
-                        onClick={() => {
-                            setSearchValue('');
-                            inputRef.current.focus();
-                        }}
-                    >
+                    <button className={cx('clear')} onClick={handleClear}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
