@@ -5,12 +5,12 @@ import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-s
 import styles from './Search.module.scss';
 import HeadlessTippy from '@tippyjs/react/headless';
 
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountsItem from '~/components/AccountsItem';
 import { SearchIcon } from '~/components/Icons/Icon';
 import { useDebounce } from '~/hooks';
-import * as request from '~/utils/request';
+import * as request from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 
